@@ -84,7 +84,7 @@ CORE_FILES=const.js config.js io.js main.js lib.js buffer.js ide.js pci.js flopp
 	   state.js ne2k.js sb16.js virtio.js virtio_console.js virtio_net.js \
 	   bus.js log.js cpu.js debug.js \
 	   elf.js kernel.js
-LIB_FILES=9p.js filesystem.js jor1k.js marshall.js
+LIB_FILES=9p-puter.js filesystem.js jor1k.js marshall.js
 BROWSER_FILES=screen.js keyboard.js mouse.js speaker.js serial.js \
 	      network.js starter.js worker_bus.js dummy_screen.js \
 	      fake_network.js wisp_network.js fetch_network.js print_stats.js filestorage.js
@@ -106,6 +106,7 @@ build/v86_all.js: $(CLOSURE) src/*.js src/browser/*.js lib/*.js
 		--define=DEBUG=false\
 		$(CLOSURE_SOURCE_MAP)\
 		$(CLOSURE_FLAGS)\
+		--jscomp_off=missingProperties \
 		--compilation_level ADVANCED\
 		--js $(CORE_FILES)\
 		--js $(LIB_FILES)\
@@ -134,7 +135,7 @@ build/libv86.js: $(CLOSURE) src/*.js lib/*.js src/browser/*.js
 		--define=DEBUG=false\
 		$(CLOSURE_FLAGS)\
 		--compilation_level SIMPLE\
-		--jscomp_off=missingProperties\
+		--jscomp_off=missingProperties \
 		--output_wrapper ';(function(){%output%}).call(this);'\
 		--js $(CORE_FILES)\
 		--js $(BROWSER_FILES)\
